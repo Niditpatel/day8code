@@ -9,28 +9,25 @@ import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@ang
 })
 export class AppComponent implements OnInit {
   title = 'StudentAdmission';
+  studentdata:any[]=[];
 
   constructor(private fb: FormBuilder) {
 
   }
   ngOnInit(): void {
-    console.log(this.StudentForm.controls.Emergency.controls.EmergencyContact.controls[0].controls.Realtion)
+    console.log(this.EmergencyList.controls[0].controls)
   }
   EmergencyList = this.fb.array([
     this.fb.group({
-      Realtion: this.fb.control('hello'),
-      Number: this.fb.control('hii')
-    }),
-    this.fb.group({
-      Realtion: this.fb.control(''),
+      Relation: this.fb.control(''),
       Number: this.fb.control('')
     })
   ]);
   ReferenceList = this.fb.array([
-    {
+    this.fb.group({
       Address: this.fb.control(''),
       Number: this.fb.control('')
-    }
+    })
   ]);
   StudentForm = this.fb.group({
     Name: this.fb.group({
@@ -85,8 +82,35 @@ export class AppComponent implements OnInit {
     })
   })
   
-  
+  AddEmergency(){
+    this.EmergencyList.push(
+      this.fb.group({
+      Relation:this.fb.control(''),
+      Number:this.fb.control('')
+    })
+    )
+  }
+  DeleteEmergency(i:number){
+    this.EmergencyList.removeAt(i);
+  }
+  AddReference(){
+    this.ReferenceList.push(
+      this.fb.group({
+        Address:this.fb.control(''),
+        Number:this.fb.control('')
+      })
+    )
+  }
 
+  DeleteReference(i:number){
+    this.ReferenceList.removeAt(i);
+  }
+
+  addStudentdata(item:any){
+    console.log(item);
+    this.studentdata.push(item);
+    console.log(this.studentdata);
+  }
 }
 
 
